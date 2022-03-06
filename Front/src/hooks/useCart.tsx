@@ -7,12 +7,15 @@ const useCart = () => {
   const [message, setMessage] = useState<string | null>(null);
 
   const loadCart = () => {
-    fetch(`${endpoint}/cart`)
-      .then((res) => res.json())
-      .then((res) => {
-        setLoading(false);
-        setProducts(res.products);
-      });
+    return new Promise((resolve) => {
+      fetch(`${endpoint}/cart`)
+        .then((res) => res.json())
+        .then((res) => {
+          setLoading(false);
+          setProducts(res.products);
+          resolve(true);
+        });
+    });
   };
 
   useEffect(() => {
@@ -20,19 +23,21 @@ const useCart = () => {
   }, []);
 
   const removeToCart = (product: Product) => {
-    setLoading(true);
-    fetch(`${endpoint}/cart/${product.id}`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setMessage("Produit bien supprimé");
-        loadCart();
-      });
+    return new Promise((resolve) => {
+      setLoading(true);
+      fetch(`${endpoint}/cart/${product.id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setMessage("Produit bien supprimé");
+          loadCart().then(resolve);
+        });
+    });
   };
 
   return {

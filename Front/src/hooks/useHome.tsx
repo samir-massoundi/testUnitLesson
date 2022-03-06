@@ -6,12 +6,15 @@ const useHome = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const loadProducts = () => {
-    fetch(`${endpoint}/products`)
-      .then((res) => res.json())
-      .then((res) => {
-        setLoading(false);
-        setProducts(res);
-      });
+    return new Promise((resolve) =>
+      fetch(`${endpoint}/products`)
+        .then((res) => res.json())
+        .then((res) => {
+          setLoading(false);
+          setProducts(res);
+          resolve(true);
+        })
+    );
   };
 
   useEffect(() => {
