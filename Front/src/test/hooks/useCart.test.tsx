@@ -10,26 +10,12 @@ const server = setupServer(
             return res(
                 ctx.json({
                     products: [{
-                        id: 3,
-                        name: 'Summer Smith',
-                        price: '15',
-                        quantity: 5,
-                        image: 'https://rickandmortyapi.com/api/character/avatar/3.jpeg'
-                    },
-                        {
-                            id: 15,
-                            name: 'Alien Rick',
-                            price: '20',
-                            quantity: 20,
-                            image: 'https://rickandmortyapi.com/api/character/avatar/15.jpeg'
-                        },
-                        {
-                            id: 15,
-                            name: 'Alien Rick',
-                            price: '20',
-                            quantity: 20,
-                            image: 'https://rickandmortyapi.com/api/character/avatar/15.jpeg'
-                        }
+                        "id": 1,
+                        "name": "Rick Sanchez",
+                        "price": "8",
+                        "quantity": 1,
+                        "image": "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+                    }
                 ]}))}),
     // remove
     );
