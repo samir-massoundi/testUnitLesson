@@ -6,6 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApiTest extends WebTestCase
 {
+    public function testApiDefault(): void
+    {
+        $client = static::createClient();
+        // Request a specific page
+        $client->jsonRequest('GET', '/');
+        $response = $client->getResponse();
+        $this->assertResponseIsSuccessful();
+        $this->assertJson($response->getContent());
+        $responseData = json_decode($response->getContent(), true);
+        $this->assertEquals(['message' => "Hello"], $responseData);
+    }
     public function testApiCall(): void
     {
         $client = static::createClient();
@@ -71,14 +82,14 @@ class ApiTest extends WebTestCase
         $this->assertJson($response->getContent());
         $responseData = json_decode($response->getContent(), true);
 
-        // $this->assertIsArray($responseData, 'check if its object or not');
-        // $this->assertIsArray($responseData['products'][0], 'check if its object or not');
+        $this->assertIsArray($responseData, 'check if its object or not');
+        $this->assertIsArray($responseData['products'][0], 'check if its object or not');
         
-        // $this->assertArrayHasKey('id', $responseData['products'][0]);
-        // $this->assertArrayHasKey('name', $responseData['products'][0]);
-        // $this->assertArrayHasKey('price', $responseData['products'][0]);
-        // $this->assertArrayHasKey('quantity', $responseData['products'][0]);
-        // $this->assertArrayHasKey('image', $responseData['products'][0]);
+        $this->assertArrayHasKey('id', $responseData['products'][0]);
+        $this->assertArrayHasKey('name', $responseData['products'][0]);
+        $this->assertArrayHasKey('price', $responseData['products'][0]);
+        $this->assertArrayHasKey('quantity', $responseData['products'][0]);
+        $this->assertArrayHasKey('image', $responseData['products'][0]);
     }
 
     public function testAddProductToCart()
